@@ -11,11 +11,11 @@ interface routesMapInterface {
 }
 
 const routesMap: routesMapInterface = {
-  singUp: (onRouteChange: any) => (
-    <SignUp onSubmitAction={onRouteChange.bind(onRouteChange, "map")} />
+  signUp: (onRouteChange: any) => (
+    <SignUp onSubmitAction={() => onRouteChange("map")} />
   ),
   signIn: (onRouteChange: any) => (
-    <SignIn onSubmitAction={onRouteChange.bind(onRouteChange, "map")} />
+    <SignIn onSubmitAction={() => onRouteChange("map")} />
   ),
   profile: () => <Profile />,
   map: () => <Map />
@@ -23,7 +23,7 @@ const routesMap: routesMapInterface = {
 
 class App extends React.Component {
   state = {
-    currentRoute: "signIn"
+    currentRoute: "signUp"
   };
   onRouteChange = (route: string) => {
     this.setState({ currentRoute: route });
