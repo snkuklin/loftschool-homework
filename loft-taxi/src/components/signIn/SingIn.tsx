@@ -1,54 +1,86 @@
 import * as React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import Button from "../../common/button";
 
 export interface SignInProps {
   onSubmitAction: () => void;
 }
 
-class SignIn extends React.Component<SignInProps> {
-  state = {
-    email: "",
-    password: ""
-  };
-  onFieldChange = (e: any) => {
-    let target = e.target;
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      minWidth: 200,
+      maxWidth: 500,
+      padding: "40px 60px",
+      margin: 30
+    },
+    buttonContainer: {
+      textAlign: "right"
+    }
+  })
+);
 
-    this.setState({ [target.name]: target.value });
-  };
-  onSubmit = (e: any) => {
-    const { onSubmitAction } = this.props;
+const SignIn: React.SFC<SignInProps> = ({ onSubmitAction }) => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const classes = useStyles();
+  const onSubmit = (e: any) => {
     e.preventDefault();
+    console.log(e);
     onSubmitAction();
   };
-  render() {
-    const { email, password } = this.state;
-    return (
-      <div>
-        <h1>Авторизация</h1>
-        <form onSubmit={this.onSubmit}>
-          <label>
-            Адрес электронной почты:
-            <input
+
+  return (
+    <Paper className={classes.paper}>
+      <form onSubmit={onSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <h1>Авторизация</h1>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <Grid item>
+                <Typography>Новый пользователь?</Typography>
+              </Grid>
+              <Grid item>
+                <Link href="#">Зарегистрируйтесь</Link>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               type="email"
               name="email"
+              label="Адрес электронной почты"
+              required
+              fullWidth
               value={email}
-              onChange={this.onFieldChange}
+              onChange={e => setEmail(e.target.value)}
             />
-          </label>
-          <label>
-            Пароль:
-            <input
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               type="password"
               name="password"
+              label="Пароль"
+              required
+              fullWidth
               value={password}
-              onChange={this.onFieldChange}
+              onChange={e => setPassword(e.target.value)}
             />
-          </label>
-          <Button text="Войти" />
-        </form>
-      </div>
-    );
-  }
-}
+          </Grid>
+          <Grid item xs={12} className={classes.buttonContainer}>
+            <Button text="Войти" type="submit" variant="contained" color="primary" />
+          </Grid>
+        </Grid>
+      </form>
+    </Paper>
+  );
+};
 
 export default SignIn;
