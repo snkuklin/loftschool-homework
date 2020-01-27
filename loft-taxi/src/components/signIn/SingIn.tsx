@@ -16,8 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       minWidth: 200,
       maxWidth: 500,
-      padding: "40px 60px",
-      margin: 30
+      padding: "40px 60px"
     },
     buttonContainer: {
       textAlign: "right"
@@ -31,7 +30,6 @@ const SignIn: React.SFC<SignInProps> = ({ onSubmitAction }) => {
   const classes = useStyles();
   const onSubmit = (e: any) => {
     e.preventDefault();
-    console.log(e);
     onSubmitAction();
   };
 
@@ -55,7 +53,6 @@ const SignIn: React.SFC<SignInProps> = ({ onSubmitAction }) => {
           <Grid item xs={12}>
             <TextField
               type="email"
-              name="email"
               label="Адрес электронной почты"
               required
               fullWidth
@@ -66,7 +63,6 @@ const SignIn: React.SFC<SignInProps> = ({ onSubmitAction }) => {
           <Grid item xs={12}>
             <TextField
               type="password"
-              name="password"
               label="Пароль"
               required
               fullWidth
@@ -75,7 +71,12 @@ const SignIn: React.SFC<SignInProps> = ({ onSubmitAction }) => {
             />
           </Grid>
           <Grid item xs={12} className={classes.buttonContainer}>
-            <Button text="Войти" type="submit" variant="contained" color="primary" />
+            <Button
+              text="Войти"
+              type="submit"
+              variant="contained"
+              color="primary"
+            />
           </Grid>
         </Grid>
       </form>

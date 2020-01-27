@@ -7,7 +7,7 @@ import Map from "./components/map";
 import "./App.css";
 
 interface routesMapInterface {
-  [key: string]: any; // may be a different type?
+  [key: string]: any;
 }
 
 const routesMap: routesMapInterface = {
@@ -21,21 +21,19 @@ const routesMap: routesMapInterface = {
   map: () => <Map />
 };
 
-class App extends React.Component {
-  state = {
-    currentRoute: "signUp"
+export interface AppProps {}
+
+const App: React.SFC<AppProps> = () => {
+  const [currentRoute, setCurrentRoute] = React.useState("signUp");
+  const onRouteChange = (route: string) => {
+    setCurrentRoute(route);
   };
-  onRouteChange = (route: string) => {
-    this.setState({ currentRoute: route });
-  };
-  render() {
-    const { currentRoute } = this.state;
-    return (
-      <div>
-        <Header onButtonClick={this.onRouteChange}></Header>
-        {routesMap[currentRoute](this.onRouteChange)}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Header onButtonClick={onRouteChange}></Header>
+      {routesMap[currentRoute](onRouteChange)}
+    </div>
+  );
+};
+
 export default App;

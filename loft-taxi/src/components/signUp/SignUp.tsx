@@ -1,74 +1,108 @@
 import * as React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import Button from "../../common/button";
 
 export interface SignUpProps {
   onSubmitAction: () => void;
 }
 
-class SignUp extends React.Component<SignUpProps> {
-  state = {
-    email: "",
-    firstName: "",
-    surname: "",
-    password: ""
-  };
-  onFieldChange = (e: any) => {
-    let target = e.target;
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      minWidth: 200,
+      maxWidth: 500,
+      padding: "40px 60px"
+    },
+    buttonContainer: {
+      textAlign: "right"
+    }
+  })
+);
 
-    this.setState({ [target.name]: target.value });
-  };
-  onSubmit = (e: any) => {
-    const { onSubmitAction } = this.props;
+const SignUp: React.SFC<SignUpProps> = ({ onSubmitAction }) => {
+  const [email, setEmail] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [surname, setSurname] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const classes = useStyles();
+  const onSubmit = (e: any) => {
     e.preventDefault();
     onSubmitAction();
   };
-  render() {
-    const { email, firstName, surname, password } = this.state;
-    return (
-      <div>
-        <h1>Регистрация</h1>
-        <form onSubmit={this.onSubmit}>
-          <label>
-            Адрес электронной почты:
-            <input
+  return (
+    <Paper className={classes.paper}>
+      <form onSubmit={onSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <h1>Регистрация</h1>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <Grid item>
+                <Typography>Уже зарегистрированы?</Typography>
+              </Grid>
+              <Grid item>
+                <Link href="#">Войти</Link>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               type="email"
-              name="email"
+              label="Адрес электронной почты"
+              required
+              fullWidth
               value={email}
-              onChange={this.onFieldChange}
+              onChange={e => setEmail(e.target.value)}
             />
-          </label>
-          <label>
-            Имя:
-            <input
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
               type="text"
-              name="firstName"
+              label="Имя"
+              required
+              fullWidth
               value={firstName}
-              onChange={this.onFieldChange}
+              onChange={e => setFirstName(e.target.value)}
             />
-          </label>
-          <label>
-            Фамилия:
-            <input
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
               type="text"
-              name="surname"
+              label="Фамилия"
+              required
+              fullWidth
               value={surname}
-              onChange={this.onFieldChange}
+              onChange={e => setSurname(e.target.value)}
             />
-          </label>
-          <label>
-            Пароль:
-            <input
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               type="password"
-              name="password"
+              label="Пароль"
+              required
+              fullWidth
               value={password}
-              onChange={this.onFieldChange}
+              onChange={e => setPassword(e.target.value)}
             />
-          </label>
-          <Button text="Зарегистрироваться" />
-        </form>
-      </div>
-    );
-  }
-}
+          </Grid>
+          <Grid item xs={12} className={classes.buttonContainer}>
+            <Button
+              text="Войти"
+              type="submit"
+              variant="contained"
+              color="primary"
+            />
+          </Grid>
+        </Grid>
+      </form>
+    </Paper>
+  );
+};
 
 export default SignUp;

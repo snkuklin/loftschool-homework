@@ -22,10 +22,8 @@ const Button: React.SFC<ButtonProps> = ButtonProps => {
 
   return (
     <MuiButton
+      {...ButtonProps}
       className={classes.muiButton}
-      type={ButtonProps.type}
-      variant={ButtonProps.variant}
-      color={ButtonProps.color}
       onClick={() =>
         ButtonProps.route &&
         ButtonProps.handler &&
