@@ -30,8 +30,8 @@ const Map: React.SFC<MapProps> = () => {
     const mapOptions: MapboxOptions = {
       container: mapContainer.current || "",
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [0, 0],
-      zoom: 3
+      center: [93, 62],
+      zoom: 2
     };
     const map = new mapboxgl.Map(mapOptions);
 

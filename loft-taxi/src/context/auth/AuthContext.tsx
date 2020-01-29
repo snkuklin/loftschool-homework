@@ -1,34 +1,37 @@
 import * as React from "react";
 
-export interface AuthProviderProps {}
-export interface AuthContextProps {
+interface AuthContextState {
   isLoggedIn: boolean;
-  login: (isLoggedIn: boolean) => void;
+  login: (email: string, password: string) => void;
   logout: () => void;
 }
 
-const AuthContext = React.createContext<AuthContextProps>({
+const defaultAuthContextState: AuthContextState = {
   isLoggedIn: false,
-  login: (isLoggedIn: boolean) => {},
-  logout: () => {}
-});
+  login: (): void => {},
+  logout: (): void => {}
+};
 
-const AuthProvider: React.SFC<AuthProviderProps> = props => {
+const AuthContext = React.createContext<AuthContextState>(
+  defaultAuthContextState
+);
+
+const AuthProvider: React.FC = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const login = (isLoggedIn:boolean) => setIsLoggedIn(!isLoggedIn);
+  const login = (email: string, password: string) => {
+    email && password && setIsLoggedIn(true);
+  };
   const logout = () => setIsLoggedIn(false);
-  // const getProviderValue = () => {
-  //   const value: AuthContextProps = {
-  //     isLoggedIn: getIsLoggedIn,
-  //     logout: logout,
-  //     login: login
-  //   };
 
-  //   return value;
-  // };
   return (
-    <AuthContext.Provider value={{isLoggedIn: isLoggedIn, login: login, logout: logout}}>
-      {props.children}
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        login,
+        logout
+      }}
+    >
+      {children}
     </AuthContext.Provider>
   );
 };

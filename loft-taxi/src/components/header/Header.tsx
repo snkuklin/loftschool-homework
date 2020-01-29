@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "../../common/button";
 import Logo from "../../common/logo";
+import { AuthContext } from "../../context/auth";
 
 export interface HeaderProps {
   onButtonClick: (route: string) => void;
@@ -22,10 +23,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Header: React.SFC<HeaderProps> = ({ onButtonClick }) => {
+const Header: React.FC<HeaderProps> = ({ onButtonClick }) => {
   const classes = useStyles();
+  const { isLoggedIn, logout } = React.useContext(AuthContext);
+  const doLogout = (route: string) => {
+    logout();
+    onButtonClick(route);
+  };
 
-  return (
+  return isLoggedIn ? (
     <AppBar position="static" color="default" className={classes.header}>
       <Toolbar>
         <Typography className={classes.title}>
@@ -33,10 +39,10 @@ const Header: React.SFC<HeaderProps> = ({ onButtonClick }) => {
         </Typography>
         <Button text="Карта" route="map" handler={onButtonClick}></Button>
         <Button text="Профиль" route="profile" handler={onButtonClick}></Button>
-        <Button text="Выйти" route="signIn" handler={onButtonClick}></Button>
+        <Button text="Выйти" route="signIn" handler={doLogout}></Button>
       </Toolbar>
     </AppBar>
-  );
+  ) : null;
 };
 
 export default Header;

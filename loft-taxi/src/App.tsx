@@ -4,7 +4,7 @@ import SignIn from "./components/signIn";
 import Header from "./components/header";
 import Profile from "./components/profile";
 import Map from "./components/map";
-import { AuthContext, AuthProvider } from "./context/auth";
+import { AuthProvider } from "./context/auth";
 import "./App.css";
 
 interface routesMapInterface {
@@ -22,18 +22,17 @@ const routesMap: routesMapInterface = {
   map: () => <Map />
 };
 
-export interface AppProps {}
-
-const App: React.SFC<AppProps> = () => {
+const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = React.useState("signIn");
-  const {isLoggedIn} = React.useContext(AuthContext);
-  const onRouteChange = (route: string, fn?: void) => {
+  const onRouteChange = (route: string) => {
     setCurrentRoute(route);
   };
   return (
     <div>
-        {isLoggedIn ? <Header onButtonClick={onRouteChange}></Header> : null}
+      <AuthProvider>
+        <Header onButtonClick={onRouteChange}></Header>
         {routesMap[currentRoute](onRouteChange)}
+      </AuthProvider>
     </div>
   );
 };

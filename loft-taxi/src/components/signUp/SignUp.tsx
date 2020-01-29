@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SignUp: React.SFC<SignUpProps> = ({ onSubmitAction }) => {
+  const classes = useStyles();
   const [email, setEmail] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [surname, setSurname] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const classes = useStyles();
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     onSubmitAction();
   };

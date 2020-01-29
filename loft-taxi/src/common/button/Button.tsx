@@ -19,16 +19,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Button: React.SFC<ButtonProps> = ButtonProps => {
   const classes = useStyles();
+  const onClickHandler = () => {
+    let { route, handler } = ButtonProps;
+
+    route && handler && handler(route);
+  };
 
   return (
     <MuiButton
-      {...ButtonProps}
       className={classes.muiButton}
-      onClick={() =>
-        ButtonProps.route &&
-        ButtonProps.handler &&
-        ButtonProps.handler(ButtonProps.route)
-      }
+      onClick={onClickHandler}
+      {...ButtonProps}
     >
       {ButtonProps.text}
     </MuiButton>
