@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "../../common/button";
+import { AuthContext, AuthProvider } from "../../context/auth";
 
 export interface SignInProps {
   onSubmitAction: () => void;
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const SignIn: React.SFC<SignInProps> = ({ onSubmitAction }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { login } = React.useContext(AuthContext);
   const classes = useStyles();
   const onSubmit = (e: any) => {
     e.preventDefault();
@@ -76,6 +78,7 @@ const SignIn: React.SFC<SignInProps> = ({ onSubmitAction }) => {
               type="submit"
               variant="contained"
               color="primary"
+              onClick={e => login(true)}
             />
           </Grid>
         </Grid>
