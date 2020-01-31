@@ -3,10 +3,10 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Button as MuiButton } from "@material-ui/core";
 import { ButtonProps as MuiButtonProps } from "@material-ui/core/Button";
 
-export interface ButtonProps extends MuiButtonProps {
+export interface ButtonProps {
   text: string;
   route?: string;
-  handler?: (route: string) => void;
+  onButtonClick?: (route: string) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,21 +17,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Button: React.SFC<ButtonProps> = ButtonProps => {
+const Button: React.FC<ButtonProps & MuiButtonProps> = Props => {
   const classes = useStyles();
-  const onClickHandler = () => {
-    let { route, handler } = ButtonProps;
-
-    route && handler && handler(route);
+  const { onButtonClick, route, text, ...muiButtonProps } = Props;
+  const onClick = () => {
+    route && onButtonClick && onButtonClick(route);
   };
 
   return (
     <MuiButton
       className={classes.muiButton}
-      onClick={onClickHandler}
-      {...ButtonProps}
+      onClick={onClick}
+      {...muiButtonProps}
     >
-      {ButtonProps.text}
+      {text}
     </MuiButton>
   );
 };

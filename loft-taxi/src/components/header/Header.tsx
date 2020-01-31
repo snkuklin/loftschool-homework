@@ -8,7 +8,7 @@ import Logo from "../../common/logo";
 import { AuthContext } from "../../context/auth";
 
 export interface HeaderProps {
-  onButtonClick: (route: string) => void;
+  onClick: (route: string) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,26 +23,26 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Header: React.FC<HeaderProps> = ({ onButtonClick }) => {
+const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const classes = useStyles();
-  const { isLoggedIn, logout } = React.useContext(AuthContext);
+  const { logout } = React.useContext(AuthContext);
   const doLogout = (route: string) => {
     logout();
-    onButtonClick(route);
+    onClick(route);
   };
 
-  return isLoggedIn ? (
+  return (
     <AppBar position="static" color="default" className={classes.header}>
       <Toolbar>
         <Typography className={classes.title}>
           <Logo />
         </Typography>
-        <Button text="Карта" route="map" handler={onButtonClick}></Button>
-        <Button text="Профиль" route="profile" handler={onButtonClick}></Button>
-        <Button text="Выйти" route="signIn" handler={doLogout}></Button>
+        <Button text="Карта" route="map" onButtonClick={onClick}></Button>
+        <Button text="Профиль" route="profile" onButtonClick={onClick}></Button>
+        <Button text="Выйти" route="signIn" onButtonClick={doLogout}></Button>
       </Toolbar>
     </AppBar>
-  ) : null;
+  );
 };
 
 export default Header;

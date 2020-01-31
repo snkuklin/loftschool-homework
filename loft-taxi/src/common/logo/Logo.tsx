@@ -1,5 +1,5 @@
 import * as React from "react";
-import LogoImage from "./logo.svg";
+import LogoImage from "./assets/img/logo.svg";
 
 export interface LogoProps {}
 

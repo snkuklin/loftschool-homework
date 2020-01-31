@@ -9,7 +9,7 @@ import Button from "../../common/button";
 import { AuthContext } from "../../context/auth";
 
 export interface SignInProps {
-  onSubmitAction: () => void;
+  onSubmit: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -25,20 +25,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SignIn: React.FC<SignInProps> = ({ onSubmitAction }) => {
+const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
   const classes = useStyles();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const { login } = React.useContext(AuthContext);
-  const onSubmit = (e: React.SyntheticEvent) => {
+  const submit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     login(email, password);
-    onSubmitAction();
+    onSubmit();
   };
 
   return (
     <Paper className={classes.paper}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={submit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <h1>Авторизация</h1>

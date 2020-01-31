@@ -4,7 +4,7 @@ import SignIn from "./components/signIn";
 import Header from "./components/header";
 import Profile from "./components/profile";
 import Map from "./components/map";
-import { AuthProvider } from "./context/auth";
+import { AuthContext } from "./context/auth";
 import "./App.css";
 
 interface routesMapInterface {
@@ -13,10 +13,10 @@ interface routesMapInterface {
 
 const routesMap: routesMapInterface = {
   signUp: (onRouteChange: any) => (
-    <SignUp onSubmitAction={() => onRouteChange("map")} />
+    <SignUp onSubmit={() => onRouteChange("map")} />
   ),
   signIn: (onRouteChange: any) => (
-    <SignIn onSubmitAction={() => onRouteChange("map")} />
+    <SignIn onSubmit={() => onRouteChange("map")} />
   ),
   profile: () => <Profile />,
   map: () => <Map />
@@ -24,15 +24,14 @@ const routesMap: routesMapInterface = {
 
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = React.useState("signIn");
+  const { isLoggedIn } = React.useContext(AuthContext);
   const onRouteChange = (route: string) => {
     setCurrentRoute(route);
   };
   return (
     <div>
-      <AuthProvider>
-        <Header onButtonClick={onRouteChange}></Header>
-        {routesMap[currentRoute](onRouteChange)}
-      </AuthProvider>
+      {isLoggedIn && <Header onClick={onRouteChange}></Header>}
+      {routesMap[currentRoute](onRouteChange)}
     </div>
   );
 };

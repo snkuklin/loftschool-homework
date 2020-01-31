@@ -8,7 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "../../common/button";
 
 export interface SignUpProps {
-  onSubmitAction: () => void;
+  onSubmit: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -24,19 +24,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SignUp: React.SFC<SignUpProps> = ({ onSubmitAction }) => {
+const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
   const classes = useStyles();
   const [email, setEmail] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [surname, setSurname] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const onSubmit = (e: React.SyntheticEvent) => {
+  const submit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    onSubmitAction();
+    onSubmit();
   };
   return (
     <Paper className={classes.paper}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={submit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <h1>Регистрация</h1>
