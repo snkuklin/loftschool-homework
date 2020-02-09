@@ -5,6 +5,13 @@ import Header from "./components/header";
 import Profile from "./components/profile";
 import Map from "./components/map";
 import { AuthContext } from "./context/auth";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect,
+  RouteProps
+} from "react-router-dom";
 import "./App.css";
 
 interface routesMapInterface {
@@ -22,6 +29,25 @@ const routesMap: routesMapInterface = {
   map: () => <Map />
 };
 
+interface PrivateRouterProps extends RouteProps {
+  isLoggedIn: boolean;
+}
+
+const PrivateRouter = ({
+  isLoggedIn,
+  component,
+  ...rest
+}: PrivateRouterProps) => {
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        return isLoggedIn ? component : <Redirect to="/login" />;
+      }}
+    ></Route>
+  );
+};
+
 const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = React.useState("signIn");
   const { isLoggedIn } = React.useContext(AuthContext);
@@ -29,10 +55,17 @@ const App: React.FC = () => {
     setCurrentRoute(route);
   };
   return (
-    <div>
-      {isLoggedIn && <Header onClick={onRouteChange}></Header>}
-      {routesMap[currentRoute](onRouteChange)}
-    </div>
+    <BrowserRouter>
+      <Switch>
+        {/* <Redirect from="/" to="/login"></Redirect> */}
+        <PrivateRouter path="/app" isLoggedIn={isLoggedIn}></PrivateRouter>
+        <Route path="/login" component={SignIn} />
+      </Switch>
+      {/* <div>
+        {isLoggedIn && <Header onClick={onRouteChange}></Header>}
+        {routesMap[currentRoute](onRouteChange)}
+      </div> */}
+    </BrowserRouter>
   );
 };
 
