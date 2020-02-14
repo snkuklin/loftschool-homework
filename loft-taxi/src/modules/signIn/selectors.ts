@@ -1,8 +1,7 @@
 import { createSelector } from "reselect";
-
-const isLoggedInSelector = (state: { isLoggedIn: boolean }) => state.isLoggedIn;
+import { LoginState } from "./reducer";
 
 export const getIsLoggedIn = createSelector(
-  isLoggedInSelector,
+  (state: LoginState) => state.isLoggedIn,
   isLoggedIn => isLoggedIn
 );

@@ -5,7 +5,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import Button from "../../common/button";
+import SimpleButton from "../../common/button/simple";
 
 export interface SignUpProps {
   onSubmit: () => void;
@@ -92,7 +92,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
             />
           </Grid>
           <Grid item xs={12} className={classes.buttonContainer}>
-            <Button
+            <SimpleButton
               text="Войти"
               type="submit"
               variant="contained"
