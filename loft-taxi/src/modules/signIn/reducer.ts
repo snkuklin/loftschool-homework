@@ -40,4 +40,4 @@ const loginReducer = (
   }
 };
 
-export default combineReducers({ loginReducer });
+export default loginReducer;

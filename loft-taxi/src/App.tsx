@@ -12,6 +12,7 @@ import Main from "./components/main";
 import { getIsLoggedIn } from "./modules/signIn";
 import { LoginState } from "./modules/signIn/reducer";
 import "./App.css";
+import { globalState } from "./modules/signIn/selectors";
 
 interface PrivateRouteProps extends RouteProps {
   isLoggedIn: boolean;
@@ -33,7 +34,8 @@ const PrivateRoute = ({
 };
 
 const App: React.FC = () => {
-  const isLoggedIn = useSelector((state: LoginState) => getIsLoggedIn(state));
+  const isLoggedIn = useSelector((state: globalState) => getIsLoggedIn(state));
+  console.log({ isLoggedIn });
   return (
     <BrowserRouter>
       <Switch>

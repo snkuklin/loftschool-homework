@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { loginRequest, getIsLoggedIn } from "../../modules/signIn";
 import { LoginState } from "../../modules/signIn/reducer";
 import { Redirect } from "react-router-dom";
+import { globalState } from "../../modules/signIn/selectors";
 
 export interface SignInProps {
   onSubmit: () => void;
@@ -39,8 +40,7 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
     dispatch(loginRequest({ email, password }));
   };
 
-  const isLoggedIn = useSelector((state: LoginState) => getIsLoggedIn(state));
-
+  const isLoggedIn = useSelector((state: globalState) => getIsLoggedIn(state));
   if (isLoggedIn) {
     return <Redirect path="/login" to="/map"></Redirect>;
   }
