@@ -1,5 +1,6 @@
-import * as React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
@@ -7,15 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import SimpleButton from "../../common/button/simple";
-import { useDispatch } from "react-redux";
 import { loginRequest, getIsLoggedIn } from "../../modules/signIn";
-import { LoginState } from "../../modules/signIn/reducer";
-import { Redirect } from "react-router-dom";
-import { globalState } from "../../modules/signIn/selectors";
-
-export interface SignInProps {
-  onSubmit: () => void;
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,19 +23,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
+const SignIn: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const submit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(loginRequest({ email, password }));
   };
 
-  const isLoggedIn = useSelector((state: globalState) => getIsLoggedIn(state));
   if (isLoggedIn) {
-    return <Redirect path="/login" to="/map"></Redirect>;
+    return <Redirect path="/login" to="/map" />;
   }
 
   return (

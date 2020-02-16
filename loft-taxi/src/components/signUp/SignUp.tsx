@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
@@ -6,10 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import SimpleButton from "../../common/button/simple";
-
-export interface SignUpProps {
-  onSubmit: () => void;
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
+const SignUp: React.FC = () => {
   const classes = useStyles();
   const [email, setEmail] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
@@ -32,7 +28,6 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
   const [password, setPassword] = React.useState("");
   const submit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    onSubmit();
   };
   return (
     <Paper className={classes.paper}>

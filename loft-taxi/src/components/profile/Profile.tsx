@@ -1,8 +1,6 @@
-import * as React from "react";
+import React from "react";
 
-export interface ProfileProps {}
-
-const Profile: React.SFC<ProfileProps> = () => {
+const Profile: React.FC = () => {
   return <div>Профиль</div>;
 };
 

@@ -1,9 +1,6 @@
-import * as React from "react";
-import mapboxgl from "mapbox-gl";
-import { MapboxOptions } from "mapbox-gl";
+import React from "react";
+import mapboxgl, { MapboxOptions } from "mapbox-gl";
 import { CSSProperties } from "@material-ui/core/styles/withStyles";
-
-export interface MapProps {}
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic25rdWtsaW4iLCJhIjoiY2s1d2VncXV2MDgzeDNobnhyOTU3bDhmeCJ9.SMwjT_cbCJ1c163UkuWISg";
@@ -23,7 +20,7 @@ const innerConteinerStyle: CSSProperties = {
   bottom: 0
 };
 
-const Map: React.SFC<MapProps> = () => {
+const Map: React.FC = () => {
   const mapContainer = React.useRef(null);
 
   React.useEffect(() => {

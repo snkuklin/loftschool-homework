@@ -1,49 +1,45 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
-  RouteProps
-} from "react-router-dom";
+import { Switch, Route, Redirect, RouteProps } from "react-router-dom";
 import SignIn from "./components/signIn";
-import Main from "./components/main";
+import Header from "./components/header";
+import Map from "./components/map";
+import Profile from "./components/profile";
 import { getIsLoggedIn } from "./modules/signIn";
-import { LoginState } from "./modules/signIn/reducer";
 import "./App.css";
-import { globalState } from "./modules/signIn/selectors";
 
-interface PrivateRouteProps extends RouteProps {
-  isLoggedIn: boolean;
-}
+const PrivateRoute = ({ children, ...rest }: RouteProps) => {
+  const isLoggedIn = useSelector(getIsLoggedIn);
 
-const PrivateRoute = ({
-  isLoggedIn,
-  component,
-  ...rest
-}: PrivateRouteProps) => {
   return (
-    <Route
-      {...rest}
-      render={() => {
-        return isLoggedIn ? <Main /> : <Redirect to="/login" />;
-      }}
-    ></Route>
+    <Route {...rest}>
+      {isLoggedIn ? (
+        <div>
+          <Header />
+          {children}
+        </div>
+      ) : (
+        <Redirect to="/login" />
+      )}
+    </Route>
   );
 };
 
 const App: React.FC = () => {
-  const isLoggedIn = useSelector((state: globalState) => getIsLoggedIn(state));
-  console.log({ isLoggedIn });
   return (
-    <BrowserRouter>
-      <Switch>
-        <PrivateRoute path="/map" isLoggedIn={isLoggedIn} />
-        <Route exact path="/login" component={SignIn} />
-        <Redirect path="/" to="/login" />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Redirect exact path="/" to="/login" />
+      <Route path="/login">
+        <SignIn />
+      </Route>
+      <PrivateRoute path="/map">
+        <Map />
+      </PrivateRoute>
+      <PrivateRoute path="/profile">
+        <Profile />
+      </PrivateRoute>
+      <Redirect to="/404" />
+    </Switch>
   );
 };
 

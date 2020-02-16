@@ -1,26 +1,23 @@
-import { combineReducers } from "redux";
 import { LoginAction } from "./actions";
+import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE } from "./constants";
 
-export interface LoginState {
+export interface AuthState {
   error?: string;
   isLoading: boolean;
   isLoggedIn: boolean;
 }
 
-const initialState: LoginState = {
+const initialState: AuthState = {
   error: "",
   isLoading: false,
   isLoggedIn: false
 };
 
-const loginReducer = (
-  state = initialState,
-  action: LoginAction
-): LoginState => {
+const authReducer = (state = initialState, action: LoginAction): AuthState => {
   switch (action.type) {
-    case "LOGIN":
+    case LOGIN:
       return { ...state, isLoading: true };
-    case "LOGIN_SUCCESS":
+    case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token || "");
       return {
         ...state,
@@ -28,7 +25,7 @@ const loginReducer = (
         isLoggedIn: true,
         error: ""
       };
-    case "LOGIN_FAILURE":
+    case LOGIN_FAILURE:
       return {
         ...state,
         isLoading: false,
@@ -40,4 +37,4 @@ const loginReducer = (
   }
 };
 
-export default loginReducer;
+export default authReducer;

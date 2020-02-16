@@ -1,11 +1,7 @@
 import { createSelector } from "reselect";
-import { LoginState } from "./reducer";
-
-export interface globalState {
-  loginReducer: LoginState;
-}
+import { RootState } from "../../store/rootReducer";
 
 export const getIsLoggedIn = createSelector(
-  (state: globalState) => state.loginReducer.isLoggedIn,
+  (state: RootState) => state.auth.isLoggedIn,
   isLoggedIn => isLoggedIn
 );

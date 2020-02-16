@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
-import loginReducer from "../modules/signIn";
+import authReducer from "../modules/signIn";
+import { AuthState } from "../modules/signIn/reducer";
 
-const rootReducer = combineReducers({ loginReducer });
+export interface RootState {
+  auth: AuthState;
+}
+
+const rootReducer = combineReducers({ auth: authReducer });
 
 export default rootReducer;
