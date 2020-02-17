@@ -1,4 +1,4 @@
-import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE } from "./constants";
+import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from "./constants";
 
 export interface LoginData {
   email: string;
@@ -13,9 +13,10 @@ export interface Payload {
 export type LoginAction =
   | { type: typeof LOGIN; input: LoginData }
   | { type: typeof LOGIN_SUCCESS; payload: Payload }
-  | { type: typeof LOGIN_FAILURE; payload: Payload };
+  | { type: typeof LOGIN_FAILURE; payload: Payload }
+  | { type: typeof LOGOUT };
 
-export function loginRequest(input: LoginData): LoginAction {
+export function login(input: LoginData): LoginAction {
   return { type: LOGIN, input };
 }
 
@@ -25,4 +26,8 @@ export function loginSuccess(payload: Payload): LoginAction {
 
 export function loginFailure(payload: Payload): LoginAction {
   return { type: LOGIN_FAILURE, payload };
+}
+
+export function logout(): LoginAction {
+  return { type: LOGOUT };
 }

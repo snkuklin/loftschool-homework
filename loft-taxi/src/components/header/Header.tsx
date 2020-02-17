@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -6,6 +7,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import NavigationButton from "../../common/button/navigation";
 import SimpleButton from "../../common/button/simple";
 import Logo from "../../common/logo";
+import { logout } from "../../modules/auth";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,7 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Header: React.FC = () => {
   const classes = useStyles();
-  const doLogout = () => {};
+  const dispatch = useDispatch();
+  const doLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <AppBar position="static" color="default" className={classes.header}>

@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import authReducer from "../modules/signIn";
-import { AuthState } from "../modules/signIn/reducer";
+import authReducer from "../modules/auth";
+import { AuthState } from "../modules/auth/reducer";
 
 export interface RootState {
   auth: AuthState;

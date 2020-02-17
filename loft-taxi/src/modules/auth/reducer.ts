@@ -1,5 +1,5 @@
 import { LoginAction } from "./actions";
-import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE } from "./constants";
+import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from "./constants";
 
 export interface AuthState {
   error?: string;
@@ -31,6 +31,14 @@ const authReducer = (state = initialState, action: LoginAction): AuthState => {
         isLoading: false,
         isLoggedIn: false,
         error: action.payload.error
+      };
+    case LOGOUT:
+      localStorage.setItem("token", "");
+      return {
+        ...state,
+        isLoading: false,
+        isLoggedIn: false,
+        error: ""
       };
     default:
       return state;
