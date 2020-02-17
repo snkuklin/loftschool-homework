@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import SimpleButton from "../../common/button/simple";
+import NavigationLink from "../../common/link/navigation";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,7 +42,7 @@ const SignUp: React.FC = () => {
                 <Typography>Уже зарегистрированы?</Typography>
               </Grid>
               <Grid item>
-                <Link href="#">Войти</Link>
+                <NavigationLink to="/signin" text="Войти" />
               </Grid>
             </Grid>
           </Grid>

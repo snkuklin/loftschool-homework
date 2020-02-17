@@ -2,10 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Switch, Route, Redirect, RouteProps } from "react-router-dom";
 import SignIn from "./components/signIn";
+import SignUp from "./components/signUp";
 import Header from "./components/header";
 import Map from "./components/map";
 import Profile from "./components/profile";
-import { getIsLoggedIn } from "./modules/signIn";
+import { getIsLoggedIn } from "./modules/auth";
 import "./App.css";
 
 const PrivateRoute = ({ children, ...rest }: RouteProps) => {
@@ -19,7 +20,7 @@ const PrivateRoute = ({ children, ...rest }: RouteProps) => {
           {children}
         </div>
       ) : (
-        <Redirect to="/login" />
+        <Redirect to="/signin" />
       )}
     </Route>
   );
@@ -28,9 +29,12 @@ const PrivateRoute = ({ children, ...rest }: RouteProps) => {
 const App: React.FC = () => {
   return (
     <Switch>
-      <Redirect exact path="/" to="/login" />
-      <Route path="/login">
+      <Redirect exact path="/" to="/signin" />
+      <Route path="/signin">
         <SignIn />
+      </Route>
+      <Route path="/signup">
+        <SignUp />
       </Route>
       <PrivateRoute path="/map">
         <Map />

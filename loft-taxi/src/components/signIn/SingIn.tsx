@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import SimpleButton from "../../common/button/simple";
-import { loginRequest, getIsLoggedIn } from "../../modules/signIn";
+import NavigationLink from "../../common/link/navigation";
+import { login, getIsLoggedIn } from "../../modules/auth";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,11 +31,11 @@ const SignIn: React.FC = () => {
   const [password, setPassword] = useState("");
   const submit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(loginRequest({ email, password }));
+    dispatch(login({ email, password }));
   };
 
   if (isLoggedIn) {
-    return <Redirect path="/login" to="/map" />;
+    return <Redirect path="/signin" to="/map" />;
   }
 
   return (
@@ -51,7 +51,7 @@ const SignIn: React.FC = () => {
                 <Typography>Новый пользователь?</Typography>
               </Grid>
               <Grid item>
-                <Link href="#">Зарегистрируйтесь</Link>
+                <NavigationLink to="/signup" text="Зарегистрируйтесь" />
               </Grid>
             </Grid>
           </Grid>
