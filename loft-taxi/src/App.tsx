@@ -1,12 +1,13 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Switch, Route, Redirect, RouteProps } from "react-router-dom";
 import SignIn from "./components/signIn";
 import SignUp from "./components/signUp";
 import Header from "./components/header";
 import Map from "./components/map";
 import Profile from "./components/profile";
-import { getIsLoggedIn } from "./modules/auth";
+import { getIsLoggedIn, checkToken } from "./modules/auth";
+import { getProfile } from "./modules/profile";
 import "./App.css";
 
 const PrivateRoute = ({ children, ...rest }: RouteProps) => {
@@ -15,10 +16,10 @@ const PrivateRoute = ({ children, ...rest }: RouteProps) => {
   return (
     <Route {...rest}>
       {isLoggedIn ? (
-        <div>
+        <>
           <Header />
           {children}
-        </div>
+        </>
       ) : (
         <Redirect to="/signin" />
       )}
@@ -27,6 +28,16 @@ const PrivateRoute = ({ children, ...rest }: RouteProps) => {
 };
 
 const App: React.FC = () => {
+  let dispatch = useDispatch();
+  dispatch(checkToken());
+  let isLoggedIn = useSelector(getIsLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getProfile());
+    }
+  }, [isLoggedIn, dispatch]);
+
   return (
     <Switch>
       <Redirect exact path="/" to="/signin" />

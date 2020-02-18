@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import SimpleButton from "../../common/button/simple";
 import NavigationLink from "../../common/link/navigation";
+import { registration, getIsLoggedIn } from "../../modules/auth";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,13 +25,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SignUp: React.FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(getIsLoggedIn);
   const [email, setEmail] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
+  const [name, setName] = React.useState("");
   const [surname, setSurname] = React.useState("");
   const [password, setPassword] = React.useState("");
   const submit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    dispatch(registration({ email, name, surname, password }));
   };
+
+  if (isLoggedIn) {
+    return <Redirect path="/signup" to="/map" />;
+  }
+
   return (
     <Paper className={classes.paper}>
       <form onSubmit={submit}>
@@ -62,8 +73,8 @@ const SignUp: React.FC = () => {
               label="Имя"
               required
               fullWidth
-              value={firstName}
-              onChange={e => setFirstName(e.target.value)}
+              value={name}
+              onChange={e => setName(e.target.value)}
             />
           </Grid>
           <Grid item xs={6}>
