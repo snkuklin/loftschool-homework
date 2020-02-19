@@ -1,6 +1,11 @@
 import * as ProfileActions from "./constants";
 import { FailureActionType } from "../../../store/actions";
 
+export interface SystemProfileState {
+  isLoading: boolean;
+  profile: ProfileState;
+}
+
 export interface ProfileState {
   cardNumber: string;
   expiryDate: string;

@@ -8,8 +8,9 @@ import TextField from "@material-ui/core/TextField";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import SimpleButton from "../../components/common/button/simple";
+import LoadMask from "../../components/common/loadMask";
 import McLogo from "./components/mcLogo";
-import initialState, { getProfileData, updateProfile } from "./store";
+import { getProfileData, getIsLoading, updateProfile } from "./store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,7 +37,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const Profile: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const profileData = useSelector(getProfileData) || initialState;
+  const isLoading = useSelector(getIsLoading);
+  const profileData = useSelector(getProfileData);
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cardName, setCardName] = useState("");
@@ -66,92 +68,95 @@ const Profile: React.FC = () => {
   ]);
 
   return (
-    <Paper className={classes.outerPaper}>
-      <Grid container spacing={10}>
-        <Grid item xs={12}>
-          <Typography variant="h4" align="center">
-            Профиль
-          </Typography>
-          <Typography align="center">Способ оплаты</Typography>
+    <>
+      <LoadMask open={isLoading} />
+      <Paper className={classes.outerPaper}>
+        <Grid container spacing={10}>
+          <Grid item xs={12}>
+            <Typography variant="h4" align="center">
+              Профиль
+            </Typography>
+            <Typography align="center">Способ оплаты</Typography>
+          </Grid>
         </Grid>
-      </Grid>
-      <form onSubmit={submit}>
-        <Grid container spacing={4}>
-          <Grid item xs={6}>
-            <Paper elevation={3} className={classes.innerPaper}>
-              <McLogo className={classes.logo} />
-              <TextField
-                type="text"
-                label="Номер карты"
-                placeholder="0000 0000 0000 0000"
-                required
-                fullWidth
-                InputLabelProps={{
-                  shrink: true
-                }}
-                className={classes.field}
-                value={cardNumber}
-                onChange={e => setCardNumber(e.target.value)}
-              />
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <DatePicker
-                  label="Срок действия"
-                  format="MM/YY"
-                  openTo="year"
-                  views={["year", "month"]}
+        <form onSubmit={submit}>
+          <Grid container spacing={4}>
+            <Grid item xs={6}>
+              <Paper elevation={3} className={classes.innerPaper}>
+                <McLogo className={classes.logo} />
+                <TextField
+                  type="text"
+                  label="Номер карты"
+                  placeholder="0000 0000 0000 0000"
                   required
                   fullWidth
                   InputLabelProps={{
                     shrink: true
                   }}
                   className={classes.field}
-                  value={expiryDate}
-                  onChange={(value: any) => setExpiryDate(value)}
+                  value={cardNumber}
+                  onChange={e => setCardNumber(e.target.value)}
                 />
-              </MuiPickersUtilsProvider>
-            </Paper>
-          </Grid>
-          <Grid item xs={6}>
-            <Paper elevation={3} className={classes.innerPaper}>
-              <TextField
-                type="text"
-                label="Владелец"
-                placeholder="USER NAME"
-                required
-                fullWidth
-                InputLabelProps={{
-                  shrink: true
-                }}
-                className={classes.field}
-                value={cardName}
-                onChange={e => setCardName(e.target.value)}
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <DatePicker
+                    label="Срок действия"
+                    format="MM/YY"
+                    openTo="year"
+                    views={["year", "month"]}
+                    required
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    className={classes.field}
+                    value={expiryDate}
+                    onChange={(value: any) => setExpiryDate(value)}
+                  />
+                </MuiPickersUtilsProvider>
+              </Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper elevation={3} className={classes.innerPaper}>
+                <TextField
+                  type="text"
+                  label="Владелец"
+                  placeholder="USER NAME"
+                  required
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.field}
+                  value={cardName}
+                  onChange={e => setCardName(e.target.value)}
+                />
+                <TextField
+                  type="password"
+                  label="CVC"
+                  placeholder="CVC"
+                  required
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.field}
+                  value={cvc}
+                  onChange={e => setCvc(e.target.value)}
+                />
+              </Paper>
+            </Grid>
+            <Grid container justify="center">
+              <SimpleButton
+                text="Сохранить"
+                type="submit"
+                variant="contained"
+                color="primary"
               />
-              <TextField
-                type="password"
-                label="CVC"
-                placeholder="CVC"
-                required
-                fullWidth
-                InputLabelProps={{
-                  shrink: true
-                }}
-                className={classes.field}
-                value={cvc}
-                onChange={e => setCvc(e.target.value)}
-              />
-            </Paper>
+            </Grid>
           </Grid>
-          <Grid container justify="center">
-            <SimpleButton
-              text="Сохранить"
-              type="submit"
-              variant="contained"
-              color="primary"
-            />
-          </Grid>
-        </Grid>
-      </form>
-    </Paper>
+        </form>
+      </Paper>
+    </>
   );
 };
 

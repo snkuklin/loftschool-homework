@@ -8,7 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import SimpleButton from "../../../components/common/button/simple";
 import NavigationLink from "../../../components/common/link/navigation";
-import { registration, getIsLoggedIn } from "../store";
+import LoadMask from "../../../components/common/loadMask";
+import { registration, getIsLoggedIn, getIsLoading } from "../store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +28,7 @@ const SignUp: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(getIsLoggedIn);
+  const isLoading = useSelector(getIsLoading);
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
   const [surname, setSurname] = React.useState("");
@@ -41,73 +43,76 @@ const SignUp: React.FC = () => {
   }
 
   return (
-    <Paper className={classes.paper}>
-      <form onSubmit={submit}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <h1>Регистрация</h1>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={1}>
-              <Grid item>
-                <Typography>Уже зарегистрированы?</Typography>
-              </Grid>
-              <Grid item>
-                <NavigationLink to="/signin" text="Войти" />
+    <>
+      <LoadMask open={isLoading} />
+      <Paper className={classes.paper}>
+        <form onSubmit={submit}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <h1>Регистрация</h1>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={1}>
+                <Grid item>
+                  <Typography>Уже зарегистрированы?</Typography>
+                </Grid>
+                <Grid item>
+                  <NavigationLink to="/signin" text="Войти" />
+                </Grid>
               </Grid>
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                type="email"
+                label="Адрес электронной почты"
+                required
+                fullWidth
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                type="text"
+                label="Имя"
+                required
+                fullWidth
+                value={name}
+                onChange={e => setName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                type="text"
+                label="Фамилия"
+                required
+                fullWidth
+                value={surname}
+                onChange={e => setSurname(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                type="password"
+                label="Пароль"
+                required
+                fullWidth
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} className={classes.buttonContainer}>
+              <SimpleButton
+                text="Войти"
+                type="submit"
+                variant="contained"
+                color="primary"
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              type="email"
-              label="Адрес электронной почты"
-              required
-              fullWidth
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              type="text"
-              label="Имя"
-              required
-              fullWidth
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              type="text"
-              label="Фамилия"
-              required
-              fullWidth
-              value={surname}
-              onChange={e => setSurname(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              type="password"
-              label="Пароль"
-              required
-              fullWidth
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} className={classes.buttonContainer}>
-            <SimpleButton
-              text="Войти"
-              type="submit"
-              variant="contained"
-              color="primary"
-            />
-          </Grid>
-        </Grid>
-      </form>
-    </Paper>
+        </form>
+      </Paper>
+    </>
   );
 };
 
