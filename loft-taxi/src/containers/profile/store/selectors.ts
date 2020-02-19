@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { RootState } from "../../store/rootReducer";
+import { RootState } from "../../../store/reducer";
 
 export const getProfileData = createSelector(
   (state: RootState) => state.profile,

@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import rootReducer from "./rootReducer";
-import { authMiddleware } from "../modules/auth";
-import { profileMiddleware } from "../modules/profile";
+import rootReducer from "./reducer";
+import { authMiddleware } from "../containers/auth/store";
+import { profileMiddleware } from "../containers/profile/store";
 
 const store = createStore(
   rootReducer,

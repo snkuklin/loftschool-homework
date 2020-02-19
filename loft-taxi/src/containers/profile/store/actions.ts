@@ -1,5 +1,5 @@
 import * as ProfileActions from "./constants";
-import { FailureActionType } from "../actions";
+import { FailureActionType } from "../../../store/actions";
 
 export interface ProfileState {
   cardNumber: string;

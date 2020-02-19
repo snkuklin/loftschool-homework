@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import authReducer from "../modules/auth";
-import { AuthState } from "../modules/auth/reducer";
-import profileReducer, { ProfileState } from "../modules/profile";
+import authReducer from "../containers/auth/store";
+import { AuthState } from "../containers/auth/store/reducer";
+import profileReducer, { ProfileState } from "../containers/profile/store";
 
 export interface RootState {
   auth: AuthState;

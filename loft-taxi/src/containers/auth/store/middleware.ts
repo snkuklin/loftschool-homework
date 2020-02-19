@@ -1,7 +1,7 @@
 import { Action, Dispatch, MiddlewareAPI } from "redux";
-import { BASE_URL } from "../constants";
+import { BASE_URL } from "../../../store/constants";
 import { LoginActionType, loginSuccess } from "./actions";
-import { onRequestFailure } from "../actions";
+import { onRequestFailure } from "../../../store/actions";
 import {
   LOGIN,
   LOGIN_PATH,

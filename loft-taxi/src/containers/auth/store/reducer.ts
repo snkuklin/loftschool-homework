@@ -1,5 +1,5 @@
 import { LoginActionType } from "./actions";
-import { FAILURE_ACTION } from "../actions";
+import { FAILURE_ACTION } from "../../../store/actions";
 import * as AuthActions from "./constants";
 
 export interface AuthState {

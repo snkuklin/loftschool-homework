@@ -1,5 +1,5 @@
 import * as AuthActions from "./constants";
-import { FailureActionType } from "../actions";
+import { FailureActionType } from "../../../store/actions";
 
 export interface RegistrationData {
   email: string;

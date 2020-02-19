@@ -6,9 +6,9 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import SimpleButton from "../../common/button/simple";
-import NavigationLink from "../../common/link/navigation";
-import { registration, getIsLoggedIn } from "../../modules/auth";
+import SimpleButton from "../../../components/common/button/simple";
+import NavigationLink from "../../../components/common/link/navigation";
+import { registration, getIsLoggedIn } from "../store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

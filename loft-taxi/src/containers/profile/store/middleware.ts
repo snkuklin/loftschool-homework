@@ -4,8 +4,8 @@ import {
   getProfileSuccess,
   updateProfileSuccess
 } from "./actions";
-import { onRequestFailure } from "../actions";
-import { BASE_URL } from "../constants";
+import { onRequestFailure } from "../../../store/actions";
+import { BASE_URL } from "../../../store/constants";
 import {
   GET_PROFILE,
   UPDATE_PROFILE,

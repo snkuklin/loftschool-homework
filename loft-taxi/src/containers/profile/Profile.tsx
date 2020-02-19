@@ -7,12 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
-import SimpleButton from "../../common/button/simple";
-import MCLogoImage from "./assets/img/mc_logo.svg";
-import initialState, {
-  getProfileData,
-  updateProfile
-} from "../../modules/profile";
+import SimpleButton from "../../components/common/button/simple";
+import McLogo from "./components/mcLogo";
+import initialState, { getProfileData, updateProfile } from "./store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,16 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-
-interface McLogoProps {
-  className?: string;
-}
-
-const McLogo: React.FC<McLogoProps> = ({ className }) => {
-  return (
-    <img width="30" className={className} src={MCLogoImage} alt="MasterCard" />
-  );
-};
 
 const Profile: React.FC = () => {
   const classes = useStyles();

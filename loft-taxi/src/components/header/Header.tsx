@@ -4,10 +4,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import NavigationButton from "../../common/button/navigation";
-import SimpleButton from "../../common/button/simple";
-import Logo from "../../common/logo";
-import { logout } from "../../modules/auth";
+import NavigationButton from "../common/button/navigation";
+import SimpleButton from "../common/button/simple";
+import Logo from "../common/logo";
+import { logout } from "../../containers/auth/store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
