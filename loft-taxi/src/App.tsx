@@ -31,15 +31,15 @@ const App: React.FC = () => {
   let dispatch = useDispatch();
   let isLoggedIn = useSelector(getIsLoggedIn);
 
-  useEffect(() => {
-    dispatch(checkToken());
-  }, [dispatch]);
+  // useEffect(() => {
+  // dispatch(checkToken());
+  // }, [dispatch]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(getProfile());
-    }
-  }, [isLoggedIn, dispatch]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     dispatch(getProfile());
+  //   }
+  // }, [isLoggedIn, dispatch]);
 
   return (
     <Switch>

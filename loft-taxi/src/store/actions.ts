@@ -1,16 +1,6 @@
-export const FAILURE_ACTION = "FAILURE_ACTION";
+import { FAILURE_ACTION } from "./constants";
+import { FailureActionType, FailurePayload } from "./types";
 
-export interface FailureActionPayload {
-  error: string;
-}
-
-export type FailureActionType = {
-  type: typeof FAILURE_ACTION;
-  payload: FailureActionPayload;
-};
-
-export function onRequestFailure(
-  payload: FailureActionPayload
-): FailureActionType {
+export function onRequestFailure(payload: FailurePayload): FailureActionType {
   return { type: FAILURE_ACTION, payload };
 }

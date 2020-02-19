@@ -1,47 +1,27 @@
 import * as AuthActions from "./constants";
-import { FailureActionType } from "../../../store/actions";
+import {
+  RegistrationData,
+  LoginData,
+  AuthActionType,
+  AuthSuccessPayload
+} from "./types";
 
-export interface RegistrationData {
-  email: string;
-  password: string;
-  name: string;
-  surname: string;
-}
-
-export interface LoginData {
-  email: string;
-  password: string;
-}
-
-export interface LoginPayload {
-  token?: string;
-  error?: string;
-}
-
-export type LoginActionType =
-  | { type: typeof AuthActions.CHECK_TOKEN }
-  | { type: typeof AuthActions.REGISTRATION; input: RegistrationData }
-  | { type: typeof AuthActions.LOGIN; input: LoginData }
-  | { type: typeof AuthActions.LOGIN_SUCCESS; payload: LoginPayload }
-  | { type: typeof AuthActions.LOGOUT }
-  | FailureActionType;
-
-export function checkToken(): LoginActionType {
+export function checkToken(): AuthActionType {
   return { type: AuthActions.CHECK_TOKEN };
 }
 
-export function registration(input: RegistrationData): LoginActionType {
+export function registration(input: RegistrationData): AuthActionType {
   return { type: AuthActions.REGISTRATION, input };
 }
 
-export function login(input: LoginData): LoginActionType {
+export function login(input: LoginData): AuthActionType {
   return { type: AuthActions.LOGIN, input };
 }
 
-export function loginSuccess(payload: LoginPayload): LoginActionType {
+export function authSuccess(payload: AuthSuccessPayload): AuthActionType {
   return { type: AuthActions.LOGIN_SUCCESS, payload };
 }
 
-export function logout(): LoginActionType {
+export function logout(): AuthActionType {
   return { type: AuthActions.LOGOUT };
 }

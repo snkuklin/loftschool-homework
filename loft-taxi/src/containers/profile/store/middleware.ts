@@ -1,9 +1,6 @@
 import { Action, Dispatch, MiddlewareAPI } from "redux";
-import {
-  ProfileActionType,
-  getProfileSuccess,
-  updateProfileSuccess
-} from "./actions";
+import { ProfileActionType } from "./types";
+import { getProfileSuccess, updateProfileSuccess } from "./actions";
 import { onRequestFailure } from "../../../store/actions";
 import { BASE_URL } from "../../../store/constants";
 import {

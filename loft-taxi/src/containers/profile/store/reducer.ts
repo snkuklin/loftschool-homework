@@ -1,4 +1,4 @@
-import { SystemProfileState, ProfileActionType } from "./actions";
+import { SystemProfileState, ProfileActionType } from "./types";
 import * as ProfileActions from "./constants";
 
 export const initialState: SystemProfileState = {

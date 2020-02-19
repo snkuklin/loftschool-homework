@@ -1,12 +1,6 @@
-import { LoginActionType } from "./actions";
-import { FAILURE_ACTION } from "../../../store/actions";
+import { AuthState, AuthActionType } from "./types";
+import { FAILURE_ACTION } from "../../../store/constants";
 import * as AuthActions from "./constants";
-
-export interface AuthState {
-  error?: string;
-  isLoading: boolean;
-  isLoggedIn: boolean;
-}
 
 const initialState: AuthState = {
   error: "",
@@ -16,7 +10,7 @@ const initialState: AuthState = {
 
 const authReducer = (
   state = initialState,
-  action: LoginActionType
+  action: AuthActionType
 ): AuthState => {
   switch (action.type) {
     case AuthActions.CHECK_TOKEN:
