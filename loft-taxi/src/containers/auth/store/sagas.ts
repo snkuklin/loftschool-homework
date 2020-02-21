@@ -2,39 +2,39 @@ import { SagaIterator } from "redux-saga";
 import { take, call, put } from "redux-saga/effects";
 import { registrationFetch, loginFetch } from "./api";
 import { loginSuccess, registrationSuccess, AuthActionTypes } from "./actions";
-import { onRequestFailure } from "../../../store/actions";
+import { requestFailure } from "../../../store/actions";
 
 export function* loginSaga(): SagaIterator {
   while (true) {
-    const { input } = yield take(AuthActionTypes.LOGIN);
+    const { payload } = yield take(AuthActionTypes.LOGIN);
 
     try {
-      const payload = yield call(loginFetch, input);
+      const data = yield call(loginFetch, payload);
 
-      if (payload.success) {
-        yield put(loginSuccess(payload));
+      if (data.success) {
+        yield put(loginSuccess(data));
       } else {
-        yield put(onRequestFailure(payload));
+        yield put(requestFailure(data));
       }
     } catch (error) {
-      yield put(onRequestFailure(error));
+      yield put(requestFailure(error));
     }
   }
 }
 
 export function* registrationSaga(): SagaIterator {
   while (true) {
-    const { input } = yield take(AuthActionTypes.REGISTRATION);
+    const { payload } = yield take(AuthActionTypes.REGISTRATION);
     try {
-      const payload = yield call(registrationFetch, input);
+      const data = yield call(registrationFetch, payload);
 
-      if (payload.success) {
-        yield put(registrationSuccess(payload));
+      if (data.success) {
+        yield put(registrationSuccess(data));
       } else {
-        yield put(onRequestFailure(payload));
+        yield put(requestFailure(data));
       }
     } catch (error) {
-      yield put(onRequestFailure(error));
+      yield put(requestFailure(error));
     }
   }
 }

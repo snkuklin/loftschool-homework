@@ -8,15 +8,15 @@ const axiosInstance = axios.create({
 });
 
 export const registrationFetch = async (
-  input: RegistrationData
+  payload: RegistrationData
 ): Promise<AuthPayload> => {
-  const { data } = await axiosInstance.post(REGISTRATION_URL, input);
+  const { data } = await axiosInstance.post(REGISTRATION_URL, payload);
 
   return data;
 };
 
-export const loginFetch = async (input: LoginData): Promise<AuthPayload> => {
-  const { data } = await axiosInstance.post(LOGIN_URL, input);
+export const loginFetch = async (payload: LoginData): Promise<AuthPayload> => {
+  const { data } = await axiosInstance.post(LOGIN_URL, payload);
 
   return data;
 };

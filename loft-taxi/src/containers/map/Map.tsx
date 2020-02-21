@@ -1,13 +1,13 @@
 import React from "react";
 import mapboxgl, { MapboxOptions } from "mapbox-gl";
 import { CSSProperties } from "@material-ui/core/styles/withStyles";
+import OrderForm from "./components/orderForm";
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic25rdWtsaW4iLCJhIjoiY2s1d2VncXV2MDgzeDNobnhyOTU3bDhmeCJ9.SMwjT_cbCJ1c163UkuWISg";
 
 const outerConteinerStyle: CSSProperties = {
-  position: "relative",
-  zIndex: -1
+  position: "relative"
 };
 
 const innerConteinerStyle: CSSProperties = {
@@ -38,9 +38,12 @@ const Map: React.FC = () => {
   });
 
   return (
-    <div style={outerConteinerStyle}>
-      <div ref={mapContainer} style={innerConteinerStyle} />
-    </div>
+    <>
+      <OrderForm />
+      <div style={outerConteinerStyle}>
+        <div ref={mapContainer} style={innerConteinerStyle} />
+      </div>
+    </>
   );
 };
 

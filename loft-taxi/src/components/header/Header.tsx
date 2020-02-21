@@ -12,7 +12,8 @@ import { logout } from "../../containers/auth/store";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
+      position: "relative"
     },
     title: {
       flexGrow: 1,

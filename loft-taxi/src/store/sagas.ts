@@ -1,19 +1,15 @@
-import { Saga } from "redux-saga";
-import { all, spawn } from "redux-saga/effects";
+import { all } from "redux-saga/effects";
 import { loginSaga, registrationSaga } from "../containers/auth/store";
-
-// const sagaWatcher = (saga: Saga): Saga => {
-//   return function* watcher() {
-//     while (true) {
-//       try {
-//         yield saga();
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     }
-//   };
-// };
+import { getProfileSaga, updateProfileSaga } from "../containers/profile/store";
+import { getAddressesListSaga, getRouteSaga } from "../containers/map/store";
 
 export default function* RootSaga() {
-  yield all([loginSaga(), registrationSaga()]);
+  yield all([
+    loginSaga(),
+    registrationSaga(),
+    getProfileSaga(),
+    updateProfileSaga(),
+    getAddressesListSaga(),
+    getRouteSaga()
+  ]);
 }

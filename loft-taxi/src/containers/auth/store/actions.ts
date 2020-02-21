@@ -13,7 +13,7 @@ export enum AuthActionTypes {
 export type CheckTokenAction = { type: typeof AuthActionTypes.CHECK_TOKEN };
 export type RegistrationAction = {
   type: typeof AuthActionTypes.REGISTRATION;
-  input: LoginData;
+  payload: LoginData;
 };
 export type RegistrationSuccessAction = {
   type: typeof AuthActionTypes.REGISTRATION_SUCCESS;
@@ -21,7 +21,7 @@ export type RegistrationSuccessAction = {
 };
 export type LoginAction = {
   type: typeof AuthActionTypes.LOGIN;
-  input: LoginData;
+  payload: LoginData;
 };
 export type LoginSuccessAction = {
   type: typeof AuthActionTypes.LOGIN_SUCCESS;
@@ -42,8 +42,8 @@ export function checkToken(): CheckTokenAction {
   return { type: AuthActionTypes.CHECK_TOKEN };
 }
 
-export function registration(input: RegistrationData): RegistrationAction {
-  return { type: AuthActionTypes.REGISTRATION, input };
+export function registration(payload: RegistrationData): RegistrationAction {
+  return { type: AuthActionTypes.REGISTRATION, payload };
 }
 
 export function registrationSuccess(
@@ -52,8 +52,8 @@ export function registrationSuccess(
   return { type: AuthActionTypes.REGISTRATION_SUCCESS, payload };
 }
 
-export function login(input: LoginData): LoginAction {
-  return { type: AuthActionTypes.LOGIN, input };
+export function login(payload: LoginData): LoginAction {
+  return { type: AuthActionTypes.LOGIN, payload };
 }
 
 export function loginSuccess(payload: AuthSuccessPayload): LoginSuccessAction {
