@@ -13,11 +13,8 @@ import {
   getAddresses,
   getAddressesList,
   getRoute,
-  clearRoute,
-  getCurrentRoute
+  clearRoute
 } from "../../store";
-
-export interface OrderFormProps {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,14 +32,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const OrderForm: React.FC<OrderFormProps> = () => {
+const OrderForm: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isProfileFilled = useSelector(getProfileFilled);
   const addresses = useSelector(getAddresses);
-  const currentRoute = useSelector(getCurrentRoute);
   const [addressFrom, setAddressFrom] = useState<string | null>(null);
   const [addressTo, setAddressTo] = useState<string | null>(null);
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
 
   const onFromChange = (event: React.ChangeEvent<{}>, value: string | null) => {
     changeHandler(setAddressFrom, value);
@@ -55,6 +52,14 @@ const OrderForm: React.FC<OrderFormProps> = () => {
     value: string | null
   ) => {
     changeFn(value);
+  };
+  const submit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setIsOrderComplete(true);
+  };
+  const onNewOrderClick = () => {
+    dispatch(clearRoute());
+    setIsOrderComplete(false);
   };
 
   useEffect(() => {
@@ -71,16 +76,10 @@ const OrderForm: React.FC<OrderFormProps> = () => {
     }
   }, [addressFrom, addressTo, dispatch]);
 
-  useEffect(() => {
-    if (currentRoute.length) {
-      //TODO
-    }
-  }, [currentRoute]);
-
   return (
     <Paper className={classes.paper}>
-      {isProfileFilled ? (
-        <form>
+      {isProfileFilled && !isOrderComplete ? (
+        <form onSubmit={submit}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <Autocomplete
@@ -116,6 +115,7 @@ const OrderForm: React.FC<OrderFormProps> = () => {
             </Grid>
             <Grid item xs={12}>
               <SimpleButton
+                type="submit"
                 text="Вызвать такси"
                 variant="contained"
                 color="primary"
@@ -124,6 +124,26 @@ const OrderForm: React.FC<OrderFormProps> = () => {
             </Grid>
           </Grid>
         </form>
+      ) : isOrderComplete ? (
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Typography variant="h4">Заказ размещён</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>
+              Ваше такси уже в пути и прибудет приблизительно через 10 минут.
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <SimpleButton
+              text="Сделать новый заказ"
+              variant="contained"
+              color="primary"
+              fullWidth
+              onButtonClick={onNewOrderClick}
+            />
+          </Grid>
+        </Grid>
       ) : (
         <Grid container spacing={4}>
           <Grid item xs={12}>
