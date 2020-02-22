@@ -29,7 +29,7 @@ const addRouteLayer = (map: MapboxMap | undefined) => {
         "line-cap": "round"
       },
       paint: {
-        "line-color": "#ffc617",
+        "line-color": "#3f51b5",
         "line-width": 8
       }
     });
