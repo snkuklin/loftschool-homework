@@ -1,20 +1,19 @@
-import * as React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import React from "react";
+import { useDispatch } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "../../common/button";
-import Logo from "../../common/logo";
-import { AuthContext } from "../../context/auth";
-
-export interface HeaderProps {
-  onClick: (route: string) => void;
-}
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import NavigationButton from "../common/button/navigation";
+import SimpleButton from "../common/button/simple";
+import Logo from "../common/logo";
+import { logout } from "../../containers/auth/store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
+      position: "relative"
     },
     title: {
       flexGrow: 1,
@@ -23,12 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Header: React.FC<HeaderProps> = ({ onClick }) => {
+const Header: React.FC = () => {
   const classes = useStyles();
-  const { logout } = React.useContext(AuthContext);
-  const doLogout = (route: string) => {
-    logout();
-    onClick(route);
+  const dispatch = useDispatch();
+  const doLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -37,9 +35,9 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
         <Typography className={classes.title}>
           <Logo />
         </Typography>
-        <Button text="Карта" route="map" onButtonClick={onClick}></Button>
-        <Button text="Профиль" route="profile" onButtonClick={onClick}></Button>
-        <Button text="Выйти" route="signIn" onButtonClick={doLogout}></Button>
+        <NavigationButton to="/map" text="Карта"></NavigationButton>
+        <NavigationButton to="/profile" text="Профиль"></NavigationButton>
+        <SimpleButton text="Выйти" onButtonClick={doLogout}></SimpleButton>
       </Toolbar>
     </AppBar>
   );

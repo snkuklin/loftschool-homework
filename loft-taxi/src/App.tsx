@@ -1,38 +1,63 @@
-import React from "react";
-import SignUp from "./components/signUp";
-import SignIn from "./components/signIn";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Switch, Route, Redirect, RouteProps } from "react-router-dom";
+import SignIn from "./containers/auth/signIn";
+import SignUp from "./containers/auth/signUp";
 import Header from "./components/header";
-import Profile from "./components/profile";
-import Map from "./components/map";
-import { AuthContext } from "./context/auth";
+import Map from "./containers/map";
+import Profile from "./containers/profile";
+import { getIsLoggedIn, checkToken } from "./containers/auth/store";
+import { getProfile } from "./containers/profile/store";
 import "./App.css";
 
-interface routesMapInterface {
-  [key: string]: any;
-}
+const PrivateRoute = ({ children, ...rest }: RouteProps) => {
+  const isLoggedIn = useSelector(getIsLoggedIn);
 
-const routesMap: routesMapInterface = {
-  signUp: (onRouteChange: any) => (
-    <SignUp onSubmit={() => onRouteChange("map")} />
-  ),
-  signIn: (onRouteChange: any) => (
-    <SignIn onSubmit={() => onRouteChange("map")} />
-  ),
-  profile: () => <Profile />,
-  map: () => <Map />
+  return (
+    <Route {...rest}>
+      {isLoggedIn ? (
+        <>
+          <Header />
+          {children}
+        </>
+      ) : (
+        <Redirect to="/signin" />
+      )}
+    </Route>
+  );
 };
 
 const App: React.FC = () => {
-  const [currentRoute, setCurrentRoute] = React.useState("signIn");
-  const { isLoggedIn } = React.useContext(AuthContext);
-  const onRouteChange = (route: string) => {
-    setCurrentRoute(route);
-  };
+  let dispatch = useDispatch();
+  let isLoggedIn = useSelector(getIsLoggedIn);
+
+  useEffect(() => {
+    dispatch(checkToken());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getProfile());
+    }
+  }, [isLoggedIn, dispatch]);
+
   return (
-    <div>
-      {isLoggedIn && <Header onClick={onRouteChange}></Header>}
-      {routesMap[currentRoute](onRouteChange)}
-    </div>
+    <Switch>
+      <Redirect exact path="/" to="/signin" />
+      <Route path="/signin">
+        <SignIn />
+      </Route>
+      <Route path="/signup">
+        <SignUp />
+      </Route>
+      <PrivateRoute path="/map">
+        <Map />
+      </PrivateRoute>
+      <PrivateRoute path="/profile">
+        <Profile />
+      </PrivateRoute>
+      <Redirect to="/404" />
+    </Switch>
   );
 };
 
