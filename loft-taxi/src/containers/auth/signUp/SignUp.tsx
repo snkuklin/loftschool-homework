@@ -8,11 +8,15 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import SimpleButton from "../../../components/common/button/simple";
 import NavigationLink from "../../../components/common/link/navigation";
+import Logo from "../../../components/common/logo";
 import LoadMask from "../../../components/common/loadMask";
 import { registration, getIsLoggedIn, getIsLoading } from "../store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    grid: {
+      minHeight: "100vh"
+    },
     paper: {
       minWidth: 200,
       maxWidth: 500,
@@ -43,13 +47,23 @@ const SignUp: React.FC = () => {
   }
 
   return (
-    <>
+    <Grid
+      container
+      className={classes.grid}
+      justify="center"
+      alignItems="center"
+    >
+      <Grid item xs={3}>
+        <Logo color="white" animate />
+      </Grid>
+
       <LoadMask open={isLoading} />
+
       <Paper className={classes.paper}>
         <form onSubmit={submit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <h1>Регистрация</h1>
+              <Typography variant="h4">Регистрация</Typography>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={1}>
@@ -112,7 +126,7 @@ const SignUp: React.FC = () => {
           </Grid>
         </form>
       </Paper>
-    </>
+    </Grid>
   );
 };
 
