@@ -1,12 +1,6 @@
-import { LoginActionType } from "./actions";
-import { FAILURE_ACTION } from "../../../store/actions";
-import * as AuthActions from "./constants";
-
-export interface AuthState {
-  error?: string;
-  isLoading: boolean;
-  isLoggedIn: boolean;
-}
+import { AuthState } from "./types";
+import { AuthAction, AuthActionTypes } from "./actions";
+import { FAILURE_ACTION } from "../../../store/constants";
 
 const initialState: AuthState = {
   error: "",
@@ -14,12 +8,9 @@ const initialState: AuthState = {
   isLoggedIn: false
 };
 
-const authReducer = (
-  state = initialState,
-  action: LoginActionType
-): AuthState => {
+const authReducer = (state = initialState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case AuthActions.CHECK_TOKEN:
+    case AuthActionTypes.CHECK_TOKEN:
       let hasToken = !!localStorage.getItem("token");
 
       if (hasToken) {
@@ -27,10 +18,11 @@ const authReducer = (
       } else {
         return { ...state, isLoggedIn: false };
       }
-    case AuthActions.REGISTRATION:
-    case AuthActions.LOGIN:
+    case AuthActionTypes.REGISTRATION:
+    case AuthActionTypes.LOGIN:
       return { ...state, isLoading: true };
-    case AuthActions.LOGIN_SUCCESS:
+    case AuthActionTypes.REGISTRATION_SUCCESS:
+    case AuthActionTypes.LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token || "");
       return {
         ...state,
@@ -38,7 +30,7 @@ const authReducer = (
         isLoggedIn: true,
         error: ""
       };
-    case AuthActions.LOGOUT:
+    case AuthActionTypes.LOGOUT:
       localStorage.setItem("token", "");
       return {
         ...state,

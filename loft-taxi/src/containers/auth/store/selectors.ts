@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { RootState } from "../../../store/reducer";
+import { RootState } from "../../../store/types";
 
 export const getAuth = createSelector(
   (state: RootState) => state.auth,

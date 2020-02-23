@@ -1,37 +1,50 @@
-import * as ProfileActions from "./constants";
-import { FailureActionType } from "../../../store/actions";
+import { ProfileState } from "./types";
+import { FailureActionType } from "../../../store/types";
 
-export interface SystemProfileState {
-  isLoading: boolean;
-  profile: ProfileState;
+export enum ProfileActionTypes {
+  GET_PROFILE = "GET_PROFILE",
+  GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS",
+  UPDATE_PROFILE = "UPDATE_PROFILE",
+  UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS"
 }
 
-export interface ProfileState {
-  cardNumber: string;
-  expiryDate: string;
-  cvc: string;
-  cardName: string;
-}
+export type GetProfileAction = { type: typeof ProfileActionTypes.GET_PROFILE };
+export type GetProfileSuccessAction = {
+  type: typeof ProfileActionTypes.GET_PROFILE_SUCCESS;
+  payload: ProfileState;
+};
+export type UpdateProfileAction = {
+  type: typeof ProfileActionTypes.UPDATE_PROFILE;
+  payload: ProfileState;
+};
+export type UpdateProfileSuccessAction = {
+  type: typeof ProfileActionTypes.UPDATE_PROFILE_SUCCESS;
+  payload: ProfileState;
+};
 
-export type ProfileActionType =
-  | { type: typeof ProfileActions.GET_PROFILE }
-  | { type: typeof ProfileActions.GET_PROFILE_SUCCESS; payload: ProfileState }
-  | { type: typeof ProfileActions.UPDATE_PROFILE; input: ProfileState }
-  | { type: typeof ProfileActions.UPDATE_PROFILE_SUCCESS; data: ProfileState }
+export type ProfileAction =
+  | GetProfileAction
+  | GetProfileSuccessAction
+  | UpdateProfileAction
+  | UpdateProfileSuccessAction
   | FailureActionType;
 
-export function getProfile(): ProfileActionType {
-  return { type: ProfileActions.GET_PROFILE };
+export function getProfile(): GetProfileAction {
+  return { type: ProfileActionTypes.GET_PROFILE };
 }
 
-export function getProfileSuccess(payload: ProfileState): ProfileActionType {
-  return { type: ProfileActions.GET_PROFILE_SUCCESS, payload };
+export function getProfileSuccess(
+  payload: ProfileState
+): GetProfileSuccessAction {
+  return { type: ProfileActionTypes.GET_PROFILE_SUCCESS, payload };
 }
 
-export function updateProfile(input: ProfileState): ProfileActionType {
-  return { type: ProfileActions.UPDATE_PROFILE, input };
+export function updateProfile(payload: ProfileState): UpdateProfileAction {
+  return { type: ProfileActionTypes.UPDATE_PROFILE, payload };
 }
 
-export function updateProfileSuccess(data: ProfileState): ProfileActionType {
-  return { type: ProfileActions.UPDATE_PROFILE_SUCCESS, data };
+export function updateProfileSuccess(
+  payload: ProfileState
+): UpdateProfileSuccessAction {
+  return { type: ProfileActionTypes.UPDATE_PROFILE_SUCCESS, payload };
 }

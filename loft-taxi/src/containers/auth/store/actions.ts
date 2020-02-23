@@ -1,47 +1,65 @@
-import * as AuthActions from "./constants";
-import { FailureActionType } from "../../../store/actions";
+import { RegistrationData, LoginData, AuthSuccessPayload } from "./types";
+import { FailureActionType } from "../../../store/types";
 
-export interface RegistrationData {
-  email: string;
-  password: string;
-  name: string;
-  surname: string;
+export enum AuthActionTypes {
+  CHECK_TOKEN = "CHECK_TOKEN",
+  REGISTRATION = "REGISTRATION",
+  REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS",
+  LOGIN = "LOGIN",
+  LOGIN_SUCCESS = "LOGIN_SUCCESS",
+  LOGOUT = "LOGOUT"
 }
 
-export interface LoginData {
-  email: string;
-  password: string;
-}
+export type CheckTokenAction = { type: typeof AuthActionTypes.CHECK_TOKEN };
+export type RegistrationAction = {
+  type: typeof AuthActionTypes.REGISTRATION;
+  payload: LoginData;
+};
+export type RegistrationSuccessAction = {
+  type: typeof AuthActionTypes.REGISTRATION_SUCCESS;
+  payload: AuthSuccessPayload;
+};
+export type LoginAction = {
+  type: typeof AuthActionTypes.LOGIN;
+  payload: LoginData;
+};
+export type LoginSuccessAction = {
+  type: typeof AuthActionTypes.LOGIN_SUCCESS;
+  payload: AuthSuccessPayload;
+};
+export type LogoutAction = { type: typeof AuthActionTypes.LOGOUT };
 
-export interface LoginPayload {
-  token?: string;
-  error?: string;
-}
-
-export type LoginActionType =
-  | { type: typeof AuthActions.CHECK_TOKEN }
-  | { type: typeof AuthActions.REGISTRATION; input: RegistrationData }
-  | { type: typeof AuthActions.LOGIN; input: LoginData }
-  | { type: typeof AuthActions.LOGIN_SUCCESS; payload: LoginPayload }
-  | { type: typeof AuthActions.LOGOUT }
+export type AuthAction =
+  | CheckTokenAction
+  | RegistrationAction
+  | RegistrationSuccessAction
+  | LoginAction
+  | LoginSuccessAction
+  | LogoutAction
   | FailureActionType;
 
-export function checkToken(): LoginActionType {
-  return { type: AuthActions.CHECK_TOKEN };
+export function checkToken(): CheckTokenAction {
+  return { type: AuthActionTypes.CHECK_TOKEN };
 }
 
-export function registration(input: RegistrationData): LoginActionType {
-  return { type: AuthActions.REGISTRATION, input };
+export function registration(payload: RegistrationData): RegistrationAction {
+  return { type: AuthActionTypes.REGISTRATION, payload };
 }
 
-export function login(input: LoginData): LoginActionType {
-  return { type: AuthActions.LOGIN, input };
+export function registrationSuccess(
+  payload: AuthSuccessPayload
+): RegistrationSuccessAction {
+  return { type: AuthActionTypes.REGISTRATION_SUCCESS, payload };
 }
 
-export function loginSuccess(payload: LoginPayload): LoginActionType {
-  return { type: AuthActions.LOGIN_SUCCESS, payload };
+export function login(payload: LoginData): LoginAction {
+  return { type: AuthActionTypes.LOGIN, payload };
 }
 
-export function logout(): LoginActionType {
-  return { type: AuthActions.LOGOUT };
+export function loginSuccess(payload: AuthSuccessPayload): LoginSuccessAction {
+  return { type: AuthActionTypes.LOGIN_SUCCESS, payload };
+}
+
+export function logout(): LogoutAction {
+  return { type: AuthActionTypes.LOGOUT };
 }

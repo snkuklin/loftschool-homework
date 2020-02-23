@@ -1,7 +1,2 @@
-export const GET_PROFILE = "GET_PROFILE";
-export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
-export const UPDATE_PROFILE = "UPDATE_PROFILE";
-export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
-
-export const GET_PROFILE_PATH = "/card";
-export const UPDATE_PROFILE_PATH = "/card";
+export const GET_PROFILE_URL = "/card";
+export const UPDATE_PROFILE_URL = "/card";
