@@ -14,10 +14,14 @@ import { getProfileData, getIsLoading, updateProfile } from "./store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    grid: {
+      minHeight: "100vh"
+    },
     outerPaper: {
-      minWidth: 400,
+      minWidth: 500,
       maxWidth: 700,
-      padding: "40px 60px"
+      padding: "40px 60px",
+      margin: "40px 20px"
     },
     innerPaper: {
       position: "relative",
@@ -68,7 +72,12 @@ const Profile: React.FC = () => {
   ]);
 
   return (
-    <>
+    <Grid
+      container
+      className={classes.grid}
+      justify="center"
+      alignItems="baseline"
+    >
       <LoadMask open={isLoading} />
       <Paper className={classes.outerPaper}>
         <Grid container spacing={10}>
@@ -156,7 +165,7 @@ const Profile: React.FC = () => {
           </Grid>
         </form>
       </Paper>
-    </>
+    </Grid>
   );
 };
 
